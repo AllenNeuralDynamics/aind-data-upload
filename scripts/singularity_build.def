@@ -1,8 +1,2 @@
 Bootstrap: docker
-From: python:3.10-bullseye
-
-%post
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    unzip awscliv2.zip
-    rm awscliv2.zip
-    ./aws/install
+From: peakcom/s5cmd:v2.2.2
