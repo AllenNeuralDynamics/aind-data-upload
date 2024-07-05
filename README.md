@@ -6,4 +6,4 @@ Repository to manage uploading data to the cloud
 [![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 ## Usage
-We can add additional python if needed. For now, this will publish a singularity container with `awscli` installed. Most jobs will just use the sync command.
+We can add additional python if needed. For now, this will publish a singularity container with `s5cmd` installed. Most jobs will just use the sync command.
