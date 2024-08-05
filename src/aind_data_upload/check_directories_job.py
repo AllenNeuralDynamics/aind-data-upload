@@ -169,7 +169,8 @@ class CheckDirectoriesJob:
             )
             for path, _, files in os.walk(directory):
                 for name in files:
-                    self._check_path(path=os.path.join(path, name))
+                    # Expecting posix paths
+                    self._check_path(path=f"{path.rstrip('/')}/{name}")
 
     def _check_for_broken_sym_links(
         self, directories_to_check: List[Union[Path, str]]
