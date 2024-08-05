@@ -190,7 +190,7 @@ class TestCheckDirectoriesJob(unittest.TestCase):
         with self.assertRaises(FileNotFoundError) as e:
             self.example_job._check_path("mocked_file")
         self.assertEqual(
-            "mocked_file is either not a file or is a broken symlink",
+            "mocked_file is neither a directory, file, or valid symlink",
             e.exception.args[0],
         )
 

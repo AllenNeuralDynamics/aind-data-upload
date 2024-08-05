@@ -99,7 +99,7 @@ class CheckDirectoriesJob:
             or (os.path.islink(path) and os.path.exists(path))
         ):
             raise FileNotFoundError(
-                f"{path} is either not a file or is a broken symlink"
+                f"{path} is neither a directory, file, or valid symlink"
             )
 
     def _get_list_of_directories_to_check(self) -> List[Union[Path, str]]:
@@ -163,9 +163,7 @@ class CheckDirectoriesJob:
         """
         logging.debug(f"Scanning list: {directories}")
         total_to_scan = len(directories)
-        dir_counter = 0
-        for directory in directories:
-            dir_counter += 1
+        for dir_counter, directory in enumerate(directories, start=1):
             logging.debug(
                 f"Checking {directory}. On {dir_counter} of {total_to_scan}"
             )
