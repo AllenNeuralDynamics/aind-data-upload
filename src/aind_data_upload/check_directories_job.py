@@ -137,7 +137,9 @@ class CheckDirectoriesJob:
                 base_path = base_path + "/*"
                 for smart_spim_path in glob(base_path):
                     if os.path.isdir(smart_spim_path):
-                        directories_to_check.append(Path(smart_spim_path).as_posix())
+                        directories_to_check.append(
+                            Path(smart_spim_path).as_posix()
+                        )
                     else:
                         self._check_path(Path(smart_spim_path).as_posix())
             else:
@@ -170,7 +172,9 @@ class CheckDirectoriesJob:
             for path, _, files in os.walk(directory):
                 for name in files:
                     # Expecting posix paths
-                    self._check_path(path=f"{Path(path).as_posix().rstrip('/')}/{name}")
+                    self._check_path(
+                        path=f"{Path(path).as_posix().rstrip('/')}/{name}"
+                    )
 
     def _check_for_broken_sym_links(
         self, directories_to_check: List[Union[Path, str]]
