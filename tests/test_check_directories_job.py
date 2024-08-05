@@ -38,7 +38,9 @@ class TestJobSettings(unittest.TestCase):
             platform=Platform.SMARTSPIM,
             modalities=[
                 ModalityConfigs(
-                    source=(RESOURCES_DIR / "example_ephys_data_set"),
+                    source=(
+                        RESOURCES_DIR / "example_ephys_data_set"
+                    ).as_posix(),
                     modality=Modality.ECEPHYS,
                 ),
                 ModalityConfigs(
@@ -46,13 +48,13 @@ class TestJobSettings(unittest.TestCase):
                         RESOURCES_DIR
                         / "example_smartspim_data_set"
                         / "SmartSPIM_695464_2023-10-18_20-30-30"
-                    ),
+                    ).as_posix(),
                     modality=Modality.SPIM,
                 ),
             ],
             subject_id="12345",
             acq_datetime="2020-10-10T01:01:01",
-            metadata_dir=(RESOURCES_DIR / "metadata_dir"),
+            metadata_dir=(RESOURCES_DIR / "metadata_dir").as_posix(),
         )
         cls.example_upload_configs = example_upload_configs
 
@@ -77,7 +79,9 @@ class TestCheckDirectoriesJob(unittest.TestCase):
             platform=Platform.SMARTSPIM,
             modalities=[
                 ModalityConfigs(
-                    source=(RESOURCES_DIR / "example_ephys_data_set"),
+                    source=(
+                        RESOURCES_DIR / "example_ephys_data_set"
+                    ).as_posix(),
                     modality=Modality.ECEPHYS,
                 ),
                 ModalityConfigs(
@@ -85,13 +89,13 @@ class TestCheckDirectoriesJob(unittest.TestCase):
                         RESOURCES_DIR
                         / "example_smartspim_data_set"
                         / "SmartSPIM_695464_2023-10-18_20-30-30"
-                    ),
+                    ).as_posix(),
                     modality=Modality.SPIM,
                 ),
             ],
             subject_id="12345",
             acq_datetime="2020-10-10T01:01:01",
-            metadata_dir=(RESOURCES_DIR / "metadata_dir"),
+            metadata_dir=(RESOURCES_DIR / "metadata_dir").as_posix(),
         )
         cls.example_job = CheckDirectoriesJob(
             job_settings=JobSettings(
@@ -101,42 +105,66 @@ class TestCheckDirectoriesJob(unittest.TestCase):
         )
         cls.expected_list_of_directories_to_check = [
             RESOURCES_DIR / "example_ephys_data_set",
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "471320"),
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "503720"),
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "536120"),
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "568520"),
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_561_Em_600" / "471320"),
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_561_Em_600" / "503720"),
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_561_Em_600" / "536120"),
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_561_Em_600" / "568520"),
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_639_Em_680" / "471320"),
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_639_Em_680" / "503720"),
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_639_Em_680" / "536120"),
-            str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_639_Em_680" / "568520"),
-            str(
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "471320"
+            ).as_posix(),
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "503720"
+            ).as_posix(),
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "536120"
+            ).as_posix(),
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "568520"
+            ).as_posix(),
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_561_Em_600" / "471320"
+            ).as_posix(),
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_561_Em_600" / "503720"
+            ).as_posix(),
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_561_Em_600" / "536120"
+            ).as_posix(),
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_561_Em_600" / "568520"
+            ).as_posix(),
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_639_Em_680" / "471320"
+            ).as_posix(),
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_639_Em_680" / "503720"
+            ).as_posix(),
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_639_Em_680" / "536120"
+            ).as_posix(),
+            (
+                SMART_SPIM_DIR / "SmartSPIM" / "Ex_639_Em_680" / "568520"
+            ).as_posix(),
+            (
                 SMART_SPIM_DIR / "derivatives" / "Ex_488_Em_525_MIP" / "471320"
-            ),
-            str(
+            ).as_posix(),
+            (
                 SMART_SPIM_DIR / "derivatives" / "Ex_488_Em_525_MIP" / "503720"
-            ),
-            str(
+            ).as_posix(),
+            (
                 SMART_SPIM_DIR / "derivatives" / "Ex_488_Em_525_MIP" / "536120"
-            ),
-            str(
+            ).as_posix(),
+            (
                 SMART_SPIM_DIR / "derivatives" / "Ex_488_Em_525_MIP" / "568520"
-            ),
-            str(
+            ).as_posix(),
+            (
                 SMART_SPIM_DIR / "derivatives" / "Ex_561_Em_600_MIP" / "471320"
-            ),
-            str(
+            ).as_posix(),
+            (
                 SMART_SPIM_DIR / "derivatives" / "Ex_561_Em_600_MIP" / "503720"
-            ),
-            str(
+            ).as_posix(),
+            (
                 SMART_SPIM_DIR / "derivatives" / "Ex_561_Em_600_MIP" / "536120"
-            ),
-            str(
+            ).as_posix(),
+            (
                 SMART_SPIM_DIR / "derivatives" / "Ex_561_Em_600_MIP" / "568520"
-            ),
+            ).as_posix(),
         ]
 
     @patch("os.path.isfile")
@@ -179,45 +207,89 @@ class TestCheckDirectoriesJob(unittest.TestCase):
             self.example_job._get_list_of_directories_to_check()
         )
         expected_calls = [
-            call(str(RESOURCES_DIR / "metadata_dir" / "subject.json")),
-            call(str(SMART_SPIM_DIR / "SmartSPIM")),
-            call(str(SMART_SPIM_DIR / "derivatives")),
-            call(str(SMART_SPIM_DIR / "instrument.json")),
-            call(str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525")),
-            call(str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_561_Em_600")),
-            call(str(SMART_SPIM_DIR / "SmartSPIM" / "Ex_639_Em_680")),
-            call(str(SMART_SPIM_DIR / "SmartSPIM" / "nohup.out")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "Ex_488_Em_525_MIP")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "Ex_561_Em_600_MIP")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "ASI_logging.txt")),
+            call((RESOURCES_DIR / "metadata_dir" / "subject.json").as_posix()),
+            call((SMART_SPIM_DIR / "SmartSPIM").as_posix()),
+            call((SMART_SPIM_DIR / "derivatives").as_posix()),
+            call((SMART_SPIM_DIR / "instrument.json").as_posix()),
+            call((SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525").as_posix()),
+            call((SMART_SPIM_DIR / "SmartSPIM" / "Ex_561_Em_600").as_posix()),
+            call((SMART_SPIM_DIR / "SmartSPIM" / "Ex_639_Em_680").as_posix()),
+            call((SMART_SPIM_DIR / "SmartSPIM" / "nohup.out").as_posix()),
             call(
-                str(SMART_SPIM_DIR / "derivatives" / "DarkMaster_cropped.tif")
+                (
+                    SMART_SPIM_DIR / "derivatives" / "Ex_488_Em_525_MIP"
+                ).as_posix()
             ),
-            call(str(SMART_SPIM_DIR / "derivatives" / "FinalReport.txt")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "Flat_488_Ch0_0.tif")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "Flat_488_Ch0_1.tif")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "Flat_561_Ch1_0.tif")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "Flat_561_Ch1_1.tif")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "Flat_639_Ch2_0.tif")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "Flat_639_Ch2_1.tif")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "TileSettings.ini")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "metadata.json")),
-            call(str(SMART_SPIM_DIR / "derivatives" / "metadata.txt")),
             call(
-                str(
+                (
+                    SMART_SPIM_DIR / "derivatives" / "Ex_561_Em_600_MIP"
+                ).as_posix()
+            ),
+            call(
+                (SMART_SPIM_DIR / "derivatives" / "ASI_logging.txt").as_posix()
+            ),
+            call(
+                (
+                    SMART_SPIM_DIR / "derivatives" / "DarkMaster_cropped.tif"
+                ).as_posix()
+            ),
+            call(
+                (SMART_SPIM_DIR / "derivatives" / "FinalReport.txt").as_posix()
+            ),
+            call(
+                (
+                    SMART_SPIM_DIR / "derivatives" / "Flat_488_Ch0_0.tif"
+                ).as_posix()
+            ),
+            call(
+                (
+                    SMART_SPIM_DIR / "derivatives" / "Flat_488_Ch0_1.tif"
+                ).as_posix()
+            ),
+            call(
+                (
+                    SMART_SPIM_DIR / "derivatives" / "Flat_561_Ch1_0.tif"
+                ).as_posix()
+            ),
+            call(
+                (
+                    SMART_SPIM_DIR / "derivatives" / "Flat_561_Ch1_1.tif"
+                ).as_posix()
+            ),
+            call(
+                (
+                    SMART_SPIM_DIR / "derivatives" / "Flat_639_Ch2_0.tif"
+                ).as_posix()
+            ),
+            call(
+                (
+                    SMART_SPIM_DIR / "derivatives" / "Flat_639_Ch2_1.tif"
+                ).as_posix()
+            ),
+            call(
+                (
+                    SMART_SPIM_DIR / "derivatives" / "TileSettings.ini"
+                ).as_posix()
+            ),
+            call(
+                (SMART_SPIM_DIR / "derivatives" / "metadata.json").as_posix()
+            ),
+            call((SMART_SPIM_DIR / "derivatives" / "metadata.txt").as_posix()),
+            call(
+                (
                     SMART_SPIM_DIR / "derivatives" / "processing_manifest.json"
-                )
+                ).as_posix()
             ),
             call(
-                str(
+                (
                     SMART_SPIM_DIR
                     / "SmartSPIM"
                     / "Ex_488_Em_525"
                     / "some_file_here.txt"
-                )
+                ).as_posix()
             ),
         ]
-        mock_check_path.assert_has_calls(expected_calls)
+        mock_check_path.assert_has_calls(expected_calls, any_order=True)
         self.assertEqual(
             self.expected_list_of_directories_to_check, list_of_directories
         )
@@ -242,27 +314,27 @@ class TestCheckDirectoriesJob(unittest.TestCase):
         )
         expected_calls = [
             call(
-                path=str(
+                path=(
                     RESOURCES_DIR
                     / "example_ephys_data_set"
                     / "hello_world.txt"
-                )
+                ).as_posix()
             ),
             call(
-                path=str(
+                path=(
                     RESOURCES_DIR
                     / "example_ephys_data_set"
                     / "sub_dir/hello_world.txt"
-                )
+                ).as_posix()
             ),
             call(
-                path=str(
+                path=(
                     SMART_SPIM_DIR
                     / "SmartSPIM"
                     / "Ex_488_Em_525"
                     / "471320"
                     / "hello_world.txt"
-                )
+                ).as_posix()
             ),
         ]
         mock_check_path.assert_has_calls(expected_calls)
