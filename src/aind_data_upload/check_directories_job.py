@@ -120,7 +120,7 @@ class CheckDirectoriesJob:
         if upload_configs.metadata_dir is not None:
             metadata_dir_path = str(upload_configs.metadata_dir).rstrip("/")
             for json_file in glob(f"{metadata_dir_path}/*.json"):
-                self._check_path(json_file)
+                self._check_path(Path(json_file).as_posix())
         # Next add modality directories
         for modality_config in upload_configs.modalities:
             modality = modality_config.modality
@@ -132,16 +132,16 @@ class CheckDirectoriesJob:
                 for _ in range(0, self.job_settings.num_of_smart_spim_levels):
                     base_path = base_path + "/*"
                     for smart_spim_path in glob(base_path):
-                        self._check_path(smart_spim_path)
+                        self._check_path(Path(smart_spim_path).as_posix())
                 # Add directories to list to be partitioned.
                 base_path = base_path + "/*"
                 for smart_spim_path in glob(base_path):
                     if os.path.isdir(smart_spim_path):
-                        directories_to_check.append(smart_spim_path)
+                        directories_to_check.append(Path(smart_spim_path).as_posix())
                     else:
-                        self._check_path(smart_spim_path)
+                        self._check_path(Path(smart_spim_path).as_posix())
             else:
-                directories_to_check.append(source_dir)
+                directories_to_check.append(source_dir.as_posix())
         return directories_to_check
 
     def _dask_task_to_process_directory_list(
@@ -170,7 +170,7 @@ class CheckDirectoriesJob:
             for path, _, files in os.walk(directory):
                 for name in files:
                     # Expecting posix paths
-                    self._check_path(path=f"{path.rstrip('/')}/{name}")
+                    self._check_path(path=f"{Path(path).as_posix().rstrip('/')}/{name}")
 
     def _check_for_broken_sym_links(
         self, directories_to_check: List[Union[Path, str]]

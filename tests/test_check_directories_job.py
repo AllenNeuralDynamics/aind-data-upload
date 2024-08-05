@@ -104,7 +104,7 @@ class TestCheckDirectoriesJob(unittest.TestCase):
             )
         )
         cls.expected_list_of_directories_to_check = [
-            RESOURCES_DIR / "example_ephys_data_set",
+            (RESOURCES_DIR / "example_ephys_data_set").as_posix(),
             (
                 SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "471320"
             ).as_posix(),
@@ -290,7 +290,7 @@ class TestCheckDirectoriesJob(unittest.TestCase):
             ),
         ]
         mock_check_path.assert_has_calls(expected_calls, any_order=True)
-        self.assertEqual(
+        self.assertCountEqual(
             self.expected_list_of_directories_to_check, list_of_directories
         )
 
@@ -305,8 +305,8 @@ class TestCheckDirectoriesJob(unittest.TestCase):
         """Tests dask_task_to_process_directory_list"""
 
         list_of_directories = [
-            RESOURCES_DIR / "example_ephys_data_set",
-            SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "471320",
+            (RESOURCES_DIR / "example_ephys_data_set").as_posix(),
+            (SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "471320").as_posix(),
         ]
 
         self.example_job._dask_task_to_process_directory_list(
@@ -324,7 +324,7 @@ class TestCheckDirectoriesJob(unittest.TestCase):
                 path=(
                     RESOURCES_DIR
                     / "example_ephys_data_set"
-                    / "sub_dir/hello_world.txt"
+                    / "sub_dir" / "hello_world.txt"
                 ).as_posix()
             ),
             call(
@@ -337,15 +337,15 @@ class TestCheckDirectoriesJob(unittest.TestCase):
                 ).as_posix()
             ),
         ]
-        mock_check_path.assert_has_calls(expected_calls)
+        mock_check_path.assert_has_calls(expected_calls, any_order=True)
         mock_log_debug.assert_called()
 
     @patch("dask.bag.map_partitions")
     def test_check_for_broken_sym_links(self, mock_map_partitions: MagicMock):
         """Tests _check_for_broken_sym_links"""
         list_of_directories = [
-            RESOURCES_DIR / "example_ephys_data_set",
-            SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "471320",
+            (RESOURCES_DIR / "example_ephys_data_set").as_posix(),
+            (SMART_SPIM_DIR / "SmartSPIM" / "Ex_488_Em_525" / "471320").as_posix(),
         ]
         self.example_job._check_for_broken_sym_links(
             directories_to_check=list_of_directories
@@ -365,9 +365,10 @@ class TestCheckDirectoriesJob(unittest.TestCase):
         """Tests run_job method"""
         self.example_job.run_job()
         expected_list = self.expected_list_of_directories_to_check
-        mock_check_for_broken_symlinks.assert_has_calls(
-            [call(directories_to_check=expected_list)]
+        mock_call_list = (
+            mock_check_for_broken_symlinks.mock_calls[0].kwargs['directories_to_check']
         )
+        self.assertCountEqual(expected_list, mock_call_list)
         mock_log_debug.assert_called()
 
 
