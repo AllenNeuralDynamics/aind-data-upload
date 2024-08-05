@@ -1,0 +1,15 @@
+{
+    "describedBy": "https://raw.githubusercontent.com/AllenNeuralDynamics/aind-data-schema/main/src/aind_data_schema/subject.py",
+    "schema_version": "0.3.0",
+    "species": "Mus musculus",
+    "subject_id": "12345",
+    "sex": "Female",
+    "date_of_birth": "2023-04-10",
+    "genotype": "123d",
+    "housing": {
+        "light_cycle": {
+            "lights_on_time": "03:10:10",
+            "lights_off_time": "09:10:07"
+        }
+    }
+}
